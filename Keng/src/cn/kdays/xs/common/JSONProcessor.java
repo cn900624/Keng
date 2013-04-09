@@ -8,16 +8,10 @@ import cn.kdays.xs.bean.*;
 
 public class JSONProcessor {
 
-	private JSONObject jsonObj;
+
 
 	public JSONProcessor(String str) {
-		jsonObj = null;
-		try {
-			jsonObj = new JSONObject(str);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 
 	public Top ConvertToTop() {
@@ -67,6 +61,33 @@ public class JSONProcessor {
 			e.printStackTrace();
 		}
 		return book;
+	}
+	
+	public static User ConvertToUser(String str) throws JSONException {
+		JSONObject obj = processJson(str);
+		User user = new User();
+		int code = obj.getInt("code");
+		user.setCode(code);
+		if(code != 200) {
+			user.setMsg(obj.getString("msg"));
+		} else {
+			user.setUid(obj.getInt("uid"));
+			user.setActived(obj.getInt("actived"));
+			user.setToken(obj.getString("token"));
+		}
+		return user;
+	}
+	
+	private static JSONObject processJson(String str) {
+		JSONObject jsonObj;
+		jsonObj = null;
+		try {
+			jsonObj = new JSONObject(str);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return jsonObj;
 	}
 
 }

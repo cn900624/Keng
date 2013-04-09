@@ -15,13 +15,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 public class JSONFactory extends AbstractFactory {
 
-	protected String KDAYS_API_URL = "http://kdays.cn/api";
 
-	protected String NOVEL_API_URL = "http://xs.kdays.cn/api.php";
-
-	protected String PUBLIC_KEY = "218b358e3dc1228";
-
-	protected String PRIVATE_KEY = "404136b97514";
 
 	private String getKdaysHtml(String action) {
 		List<BasicNameValuePair> params = new LinkedList<BasicNameValuePair>();
@@ -43,32 +37,8 @@ public class JSONFactory extends AbstractFactory {
 		return getResponce(getMethod);
 	}
 
-	private String getResponce(HttpGet getMethod) {
-		String html = "";
-		DefaultHttpClient httpclient = new DefaultHttpClient();
-		HttpHost proxy = new HttpHost("web-proxy.sgp.hp.com", 8080);
-		httpclient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY,
-				proxy);
-		try {
-			HttpResponse response = httpclient.execute(getMethod);
-			InputStream in = response.getEntity().getContent();
-			BufferedReader br = new BufferedReader(new InputStreamReader(in,
-					"UTF-8"));
-			String tempbf;
-			StringBuffer te = new StringBuffer(100);
-			while ((tempbf = br.readLine()) != null) {
-				te.append(tempbf + "\n");
-			}
-			html = te.toString();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			httpclient.getConnectionManager().shutdown();
-		}
-		return html;
-	}
 
-	@Override
+
 	public String getHtml(String type, String action) {
 		// TODO Auto-generated method stub
 		if(type.equalsIgnoreCase("kdays")) {
